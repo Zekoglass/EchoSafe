@@ -1,30 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:echo_safe/main.dart';
+import 'package:echosafe/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('EchoSafe app launches successfully', (WidgetTester tester) async {
+    // Build the app
+    await tester.pumpWidget(const EchoSafeApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Verify the app loads with EchoSafe branding
+    expect(find.text('EchoSafe'), findsOneWidget);
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify bottom navigation items are present
+    // (using findsWidgets because some labels appear in both
+    // the dashboard cards AND the bottom nav bar)
+    expect(find.text('Fake Call'), findsWidgets);
+    expect(find.text('Panic'), findsOneWidget);
+    expect(find.text('Contacts'), findsWidgets);
+    expect(find.text('Home'), findsOneWidget);
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Verify the panic button card is visible
+    expect(find.text('PANIC BUTTON'), findsOneWidget);
+
+    // Verify the main tagline is visible
+    expect(find.text('Your personal safety toolkit.'), findsOneWidget);
   });
 }
